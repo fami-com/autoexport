@@ -7,7 +7,7 @@
 
 ** Example
 
-   #+begin_src common_lisp
+   #+begin_src lisp
    (ql:quickload :autoexport)
    (defpackage :my-package
      (:use :cl))
