@@ -1,0 +1,40 @@
+#+author: fami-com (Vladimir Ivanov)
+#+title: autoexport
+
+** Intro
+   ~autoexport~ is a small macro to export your definitions without any need to add them to your package's ~:export~ section.
+   It's especially useful with class definitions as it also automatically exports slots, readers, writers and accessors.
+
+** Example
+
+   #+begin_src common_lisp
+   (ql:quickload :autoexport)
+   (defpackage :my-package
+     (:use :cl))
+   
+   (defpackage :other-package
+     (:use :cl :autoexport))
+
+   ;; Switch to a package
+   (in-package :other-package)
+   (pub defun some-func () (format t "Hello, World!"))
+   (pub defclass some-class ()
+     ((x
+       :accessor x
+       :initform :x)
+      (y
+       :accessor y
+       :initform :y)))
+
+   ;; Switch to a different package
+   (in-package :my-package)
+   (other-package:some-func) ; => Hello, World!
+                             ; Note a single colon
+
+   (defvar *test-var* (make-instance 'other-package:some-class :x 1 :y 1))
+
+   (slot-value *test-var* 'other-package:x) ; => 1
+   (other-package:y *test-var*) ; => 1
+   (setf (other-package:y *test-var*) 100) ; => 100
+   (other-package:y *test-var*) ; => 100
+   #+end_src

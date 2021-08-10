@@ -7,4 +7,4 @@
     :serial t
     :depends-on (:closer-mop :alexandria)
     :components
-    ((:file "pub")))
+    ((:file "autoexport")))

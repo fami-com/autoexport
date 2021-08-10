@@ -22,9 +22,6 @@
                    do (export ,slot-name)
                    do (loop for ,reader in ,readers do
                            (export ,reader))
-                   do (loop for ,writer in ,writers
-                         if (listp ,writer) do
-                           (export (cadr ,writer))
-                         else do
+                   do (loop for ,writer in ,writers do
                            (export ,writer))))))
          (export ',name)))))
